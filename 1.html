@@ -1,18 +1,12 @@
 <meta charset "utf-8">
 <script>
-	var N=1;
-	do
+	var sum = parseInt(prompt("Ваша сумма вклада"));
+	var percent = parseInt(prompt("Процент банка"));
+	var years = parseInt(prompt("Количество лет вклада"));
+	for(var n=1;n<=years;n++)
 	{
-		if(Math.random()*6<1)
-		{
-			alert("Вы убиты на "+N+" ходу.");
-			break;
-		}
-		else if(parseInt(prompt("Продолжить дальше? 1 - да, другое - стоп"))!=1)
-		{
-			alert("Вы сыграли "+N+" раз");
-			break;
-		}
-		N++
-	}while(N<=100)
+		sum = sum+sum*percent*0.01;
+		alert("Прошел "+n+" г. Ваша сумма вклада равна "+parseInt(sum));
+	}
+	
 </script>
