@@ -1,12 +1,55 @@
 <meta charset "utf-8">
 <script>
-	var sum = parseInt(prompt("Ваша сумма вклада"));
-	var percent = parseInt(prompt("Процент банка"));
-	var years = parseInt(prompt("Количество лет вклада"));
-	for(var n=1;n<=years;n++)
+var red = [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36];
+//var black = [2,4,6,8,10,11,13,15,17,20,22,24,26,28,29,31,33,35];
+var arr = [];
+var lgthredtmp = 0;
+var lgthredmax = 0;
+var kol_0 = 0; 
+var kol_red = 0;
+var kol_bl = 0;
+alert("Поехали! 1 000 000 циклов для проверки");
+
+for (var i = 0; i<20; i++)
+{
+	arr.push(Math.floor(Math.random()*37));
+}
+
+for (var i = 0; i<arr.length; i++)
+{
+	if (arr[i]==0)
 	{
-		sum = sum+sum*percent*0.01;
-		alert("Прошел "+n+" г. Ваша сумма вклада равна "+parseInt(sum));
+		lgthredtmp = 0;
+		kol_0 = kol_0 + 1;
+		arr[i] = 0;
+		continue;
 	}
+
+	for (var j = 0; j<red.length; j++)
+	{
+		if (arr[i]==red[j])
+		{	
+			lgthredtmp = lgthredtmp + 1;
+			kol_red = kol_red + 1;
+
+			if(lgthredmax<lgthredtmp)
+			{
+				lgthredmax = lgthredtmp;
+			}
+			arr[i] = 1;
+			break;
+		}
+
+		if (j==red.length-1)
+		{
+			lgthredtmp = 0;
+			kol_bl = kol_bl + 1;
+			arr[i] = -1;
+		}
+	}	
+}
+alert(arr);
 	
+alert("Максимальная череда красной строки: " + lgthredmax+
+	".\nКоличество нулей: "+kol_0+", красных: "+kol_red+", черных: "+kol_bl);
 </script>
