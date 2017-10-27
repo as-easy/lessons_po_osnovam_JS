@@ -12,19 +12,72 @@ function getCard() {
 function getSum(arr) {
 	var sum = 0;
 	for(var i = 0; i < arr.length; i++) {
-		if (arr[i] == 'J' || arr[i] == 'Q' || arr[i] == 'K') { arr[i] = 10;	}
+		if (arr[i] == 'J' || arr[i] == 'Q' || arr[i] == 'K') { sum = sum + 10;	continue;}
 
-		if (arr[i] == 'A') { arr[i] = 11; }
-		
+		if (arr[i] == 'A') { continue;}
 		sum = sum + parseInt(arr[i]);
+	}
+
+	for(var i = 0; i < arr.length; i++) {
+		if(arr[i] == 'A') {
+			if(sum<=10) {sum = sum + 11;}
+			else {sum = sum + 1;}
+		}
 	}
 	return sum;
 }
 
+
 var dealer = [getCard()];
 var player = [getCard(), getCard()];
-
+var status = '1';
+var i = 1;
 alert('Дилер: '+dealer.join(' ') + ' Игрок: ' + player.join(' '));
+
+if(getSum(player) == 21) {
+	alert('У тебя Блэк-Джек, посмотрим вторую карту дилера!');
+	dealer[i] = getCard();
+	if(getSum(dealer) == 21) {alert('У дилера тоже Блэк-Джек. Ничья');}
+		else {alert('Поздравляем. Вы выиграли у казино!')}
+}
+else {
+	dealer[i] = getCard();
+	i++;
+
+	if(getSum(dealer) == 21) {alert('Вы проиграли! У Дилера Блэк-Джек: '+dealer.join(' '))+'. А у Вас: '+player.join(' ');}
+	else {
+			status = prompt('Еще карту? 1 - \"да\", иное - \"нет\"');
+			if(status == '1') { player[i] = getCard(); }
+			do {
+			
+			alert('на данный момент1: '+getSum(player));
+
+			if(getSum(player) > 21) {alert('Вы проиграли, у Вас перебор: '+player.join(' ')); break;}
+
+			if (getSum(dealer)<17) { dealer[i] = getCard(); }
+			if (getSum(dealer)>21) {'Поздравляем. У дилера перебор: '+dealer.join(' ')+'. Вы выиграли у казино!'; break;}
+			
+			if (getSum(dealer)>=17 && status!= '1') {
+				if(getSum(player)<getSum(dealer)) {
+					alert('Вы проиграли! У Вас: '+player.join(' ')+ '. У дилера: ' + dealer.join(' ')); break;
+				}
+				else if(getSum(player) == getSum(dealer)) {
+					alert("Ничья! У Вас: "+player.join(' ')+ ". У дилера: " + dealer.join(' ')); break;	
+				}
+				else {
+					alert('Поздравляем. Вы выиграли у казино! У Вас: '+player.join(' ')+ '. У дилера: ' + dealer.join(' ')); break;	
+				}
+			}
+			alert('на данный момент2: '+getSum(player));
+			i++;
+			if(status == '1') {status = prompt('Еще карту? 1 - \"да\", иное - \"нет\"');}
+			} while(i<21)
+	}
+}
+
+		
+	
+
 
 alert('Текущая сумма игрока: '+getSum(player));
 
