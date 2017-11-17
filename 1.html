@@ -40,51 +40,54 @@ if (sumplayer==21)
 	//dealer.push('K');
 	sumdealer = getSum(dealer);
 	if(sumdealer=='21') alert('Ничья. У обоих BlackJack!');
-	else alert('Адское везение! 21! Гуд! У дилера: '+ sumdealer);
+	else alert('Адское везение! 21! Гуд! У дилера: '+ dealer.join(', ') + ' - '+ getSum(dealer));
 }
 else
 {
 	var answer = '';
 	do
 	{
-		answer = prompt('У вас:' + getSum(player)+ ". Хотите еще карту: 1 - да, другое - нет.");
+		answer = prompt('У вас: ' +player.join(', ')+' - '+ getSum(player)+ ". Хотите еще карту: 1 - да, другое - нет.");
 
 		if(answer == '1')
 		{	player.push(getCard());
 			sumplayer = getSum(player);
 			if(sumplayer > 21)
 				{
-					alert('У вас:' + getSum(player)+'!. Перебор((');
+					alert('У вас: ' +player.join(', ')+' - '+ getSum(player)+'!. Перебор((');
 					break;
 				}
 		}
+		else
+		{
+			while (sumdealer<17)
+			{
+				dealer.push(getCard());
+				sumdealer = getSum(dealer);
+			}
+
+			if(sumdealer>21) 
+				{	
+				alert('У дилера: '+ dealer.join(', ') + ' - '+ getSum(dealer) +'!. Перебор)) гуд. У вас: ' +player.join(', ')+' - '+ getSum(player)); break;
+				}
+			else if(sumplayer == 21)
+			{
+				if(sumdealer == 21) {alert('Ничья. У обоих набранный BlackJack!'); break;}
+				else {alert('Адское везение! Набранный BlackJack! Гуд! У дилера: '+ dealer.join(', ') + ' - '+ getSum(dealer)); break;}
+			}
+			else if(sumdealer>sumplayer)
+			{
+				alert('Дилер выиграл: ' + dealer.join(', ') + ' - '+ getSum(dealer) + ' у вас: ' +player.join(', ')+' - '+ getSum(player)); break;
+			}
+			else if(sumdealer<sumplayer)
+			{
+				alert('Вы выиграли: ' +player.join(', ') +' - '+ getSum(player)+ ', у дилера: ' + dealer.join(', ') + ' - '+ getSum(dealer)); break;
+			}
 			else
 			{
-				while (sumdealer<17)
-				{
-					dealer.push(getCard());
-					sumdealer = getSum(dealer);
-				}
-
-				if(sumdealer>21) {	alert('У дилера:' + sumdealer +'!. Перебор)) гуд. У вас: ' + sumplayer); break;}
-				else if(sumplayer == 21)
-				{
-					if(sumdealer == 21) {alert('Ничья. У обоих набранный BlackJack!'); break;}
-					else {alert('Адское везение! Набранный BlackJack! Гуд! У дилера: '+ sumdealer); break;}
-				}
-				else if(sumdealer>sumplayer)
-				{
-					alert('Дилер выйграл: ' + sumdealer + 'У вас: ' + sumplayer); break;
-				}
-				else if(sumdealer<sumplayer)
-				{
-					alert('Вы выйграли: ' + sumplayer + 'У дилера: ' + sumdealer); break;
-				}
-				else
-				{
-					alert('У обоих ничья. Дилер: ' + sumdealer + ', у вас: ' + sumplayer); break;
-				}
+				alert('У обоих ничья. Дилер: ' + dealer.join(', ') + ' - '+ getSum(dealer) + ', у вас: ' +player.join(', ')+' - '+ getSum(player)); break;
 			}
+		}
 	}while(answer == '1');
 }
 
